@@ -3,9 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Learn the Fretboard</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    
+    <div id="main-menu">
+        <h1 id="start-button">Start</h1>
+        <div id="mode-selection-menu" class="hidden">
+            <button id="classic-mode-button" class="mode-button">Classic Mode</button>
+            <button id="practice-mode-button" class="mode-button">Practice Mode</button>
+            <p id="mode-description"></p>
+            <div id="string-selection" class="hidden">
+                <div>
+                    <input type="checkbox" id="E-string" name="E-string" checked/>
+                    <label for="E-string">E-String</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="A-string" name="A-string" checked/>
+                    <label for="A-string">A-String</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="D-string" name="D-string" checked/>
+                    <label for="D-string">D-String</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="G-string" name="G-string" checked/>
+                    <label for="G-string">G-String</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="B-string" name="B-string" checked/>
+                    <label for="B-string">B-String</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="e-string" name="e-string" checked/>
+                    <label for="e-string">e-String</label>
+                </div>
+                <button id="confirm-button" class="mode-button">Confirm</button>
+            </div>
+        </div>
+
+        <div id="game-interface" class="hidden">
+            <div id="note"></div>
+            <div id="string"></div>
+            <div id="timer"></div>
+            <div id="fretboard">
+
+            </div>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
 </body>
 </html>
