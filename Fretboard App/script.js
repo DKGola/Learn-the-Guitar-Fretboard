@@ -13,6 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const highEString = document.getElementById("e-string");
     const confirmButton = document.getElementById("confirm-button");
     const gameInterface = document.getElementById("game-interface");
+    const timer = document.getElementById("timer");
+
+    let score = 0;
+    let timerStart = 180;
+    const shownNoteAndString = [];  //contains string & note
 
     startButton.addEventListener("click", () => {
         startButton.classList.add("hidden");
@@ -55,5 +60,19 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
         return selectedStrings;
+    }
+
+    function startGame(mode, selectedStrings) {
+        score = 0;
+        gameInterface.classList.remove("hidden");
+        if (mode === "practice") {
+            timer.classList.add("hidden");
+        } else {
+            startTimer();
+        }
+        while (timer > 0) {
+            shownNote = generateRandomNote(selectedStrings);
+            /*test if clicked note === shownNote
+        }
     }
 });
