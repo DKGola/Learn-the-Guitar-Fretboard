@@ -38,16 +38,28 @@
                     <input type="checkbox" id="e-string" name="e-string" checked/>
                     <label for="e-string">e-String</label>
                 </div>
-                <button id="confirm-button" class="mode-button">Confirm</button>
+                <button id="confirm-button">Confirm</button>
             </div>
         </div>
 
         <div id="game-interface" class="hidden">
-            <div id="note"></div>
-            <div id="string"></div>
-            <div id="timer"></div>
-            <div id="fretboard">
+            <img src="fretboard.png" usemap="#fretboard-map" alt="Fretboard" />
+            <map name="fretboard-map">
+                
+            </map>
+            <div id="note-display"></div>
+            <div id="string-display"></div>
+            <div id="score-display">Score: 0</div>
+            <div id="timer">3:00</div>
+        </div>
+        
 
+        <div id="end-screen" class="hidden">
+            <div id="results"></div>
+            <div id="highscore"></div>
+            <div id="end-screen-menu">
+                <button id="replay-button"></button>
+                <button id="main-menu-button"></button>
             </div>
         </div>
     </div>
