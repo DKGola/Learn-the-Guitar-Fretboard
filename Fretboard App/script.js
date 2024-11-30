@@ -4,13 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const classicModeButton = document.getElementById("classic-mode-button");
     const practiceModeButton = document.getElementById("practice-mode-button");
     const modeDescription = document.getElementById("mode-description");
-    const stringSelection = document.getElementById("stringSelection");
-    const lowEString = document.getElementById("E-string");
-    const aString = document.getElementById("A-string");
-    const dString = document.getElementById("D-string");
-    const gString = document.getElementById("G-string");
-    const bString = document.getElementById("B-string");
-    const highEString = document.getElementById("e-string");
+    const stringSelection = document.getElementById("string-selection");
     const confirmButton = document.getElementById("confirm-button");
     const gameInterface = document.getElementById("game-interface");
     const scoreDisplay = document.getElementById("score-display");
@@ -19,11 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const stringDisplay = document.getElementById("string-display");
 
     let score = 0;
-    let timerStart = 180;
-    let shownNote = "";
-    let shownString = "";
-    let selectedNote = "";
-    let selectedString = "";
+    let timer = 180;
+    let gameRunning = false;
+
+    const allStrings = ["6", "5", "4", "3", "2", "1"];
+    const allNotes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 
     startButton.addEventListener("click", () => {
         startButton.classList.add("hidden");
@@ -37,15 +31,14 @@ document.addEventListener("DOMContentLoaded", () => {
     practiceModeButton.addEventListener("mouseover", () => {
         modeDescription.textContent = "Practice:\nNo time pressure or anything. You can even select specific notes you want to train.";
     });
-    
+
     classicModeButton.addEventListener("click", () => {
-        modeSelection.classList.add("hidden");
-        gameInterface.classList.remove("hidden");
-        startGame("classic");
+        modeSelectionMenu.classList.add("hidden");
+        startGame("classic", allStrings);
     });
 
     practiceModeButton.addEventListener("click", () => {
-        modeSelection.classList.add("hidden");
+        modeSelectionMenu.classList.add("hidden");
         stringSelection.classList.remove("hidden");
     });
 
@@ -71,72 +64,99 @@ document.addEventListener("DOMContentLoaded", () => {
     function startGame(mode, selectedStrings) {
         score = 0;
         timer = 180;
+        gameRunning = true;
+
         gameInterface.classList.remove("hidden");
+        scoreDisplay.textContent = `Punkte: ${score}`;
+
         if (mode === "practice") {
-            timer.classList.add("hidden");
+            timerDisplay.classList.add("hidden");
         } else {
+            timerDisplay.classList.remove("hidden");
             startTimer();
         }
 
-        while (timer > 0) {
-            generateNoteAndString(selectedStrings);
-            
-            // wait for click on field -> save as selectedNote and selectedString
+        const fretboardMap = document.querySelector("map[name='image-map']");
+        fretboardMap.addEventListener("click", (e) => handleFretboardClick(e, selectedStrings));
 
+        generateNoteAndString(selectedStrings);
 
-            if (isCorrect(shownNote, shownString, selectedNote, selectedString)) {
-                score++;    // 1 point for correct selection
-            } else {
-                if (mode === "classic") {
-                    timer -= 5; // -5 seconds for false selection
+        if (mode === "classic") {
+            const interval = setInterval(() => {
+                if (!gameRunning) {
+                    clearInterval(interval);
+                    return;
                 }
-            }
+
+                timer--;
+                timerDisplay.textContent = `Zeit: ${Math.floor(timer / 60)}:${("0" + (timer % 60)).slice(-2)}`;
+
+                if (timer <= 0) {
+                    clearInterval(interval);
+                    endGame();
+                }
+            }, 1000);
         }
     }
+
+    function handleFretboardClick(e, strings) {
+        if (!gameRunning) return;
     
+        if (e.target.tagName === "AREA") {
+            e.preventDefault();
+            const selectedNote = e.target.dataset.note;
+            const selectedString = e.target.dataset.string;
+    
+            if (isCorrect(shownNote, shownString, selectedNote, selectedString)) {
+                score++;
+                scoreDisplay.textContent = `Punkte: ${score}`;
+            } else {
+                timer -= 5;
+            }
+    
+            generateNoteAndString(strings); // Lokale Variable verwenden
+        }
+    }    
+
     function generateNoteAndString(selectedStrings) {
-        shownNote = generateRandomNote();
-        shownString = generateRandomString(selectedStrings);
-        noteDisplay.textContent = '${shownNote}';
-        stringDisplay.textContent = '${shownString}';
+        const note = generateRandomNote();
+        const string = generateRandomString(selectedStrings);
+
+        noteDisplay.textContent = `Note: ${note}`;
+        stringDisplay.textContent = `Saite: ${string}`;
+
+        shownNote = note;
+        shownString = string;
     }
 
-    // returns random note as string (e.g. "c", "c-sharp", "d-flat", ...)
     function generateRandomNote() {
-        const allNotes = ["c", "c-sharp", "d-flat", "d", "d-sharp", "e-flat", "e", "f", "f-sharp", "g-flat", "g", "g-sharp", "a-flat", "a", "a-sharp", "b-flat", "b"];
         return allNotes[Math.floor(Math.random() * allNotes.length)];
     }
 
-    // returns random string as integer, only considering selected strings (1 = highest, 6 = lowest string)
-    function generateRandomString(selectedStrings) {
-        return selectedStrings[Math.floor(Math.random() * selectedStrings.length)];
+    function generateRandomString(strings) {
+        return strings[Math.floor(Math.random() * strings.length)];
     }
 
     function isCorrect(shownNote, shownString, selectedNote, selectedString) {
-        return (shownNote === selectedNote) && (shownString === selectedString);
+        return shownNote === selectedNote && shownString === selectedString;
     }
 
     function startTimer() {
-        timerDisplay.classList.remove("hidden");
-        interval = setInterval(() => {
-            timer--;
-            const minutes = Math.floor(timer / 60);
-            const seconds = ("0" + (timer % 60)).slice(-2);
-            timerDisplay.textContent = `Zeit: ${minutes}:${seconds}`;
-            if (timer <= 0) {
-                clearInterval(interval);
-                endGame();
-            }
-        }, 1000);
+        timerDisplay.textContent = `Zeit: 3:00`;
     }
 
     function endGame() {
-        clearInterval(interval);
+        gameRunning = false;
+        alert(`Spiel vorbei! Dein Score: ${score}`);
         resetGame();
     }
 
     function resetGame() {
         gameInterface.classList.add("hidden");
+        timerDisplay.textContent = "Zeit: 3:00";
+        scoreDisplay.textContent = "Punkte: 0";
+        noteDisplay.textContent = "";
+        stringDisplay.textContent = "";
         timer = 180;
         score = 0;
     }
