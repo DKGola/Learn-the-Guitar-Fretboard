@@ -1,3 +1,203 @@
+/* Allgemeines Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body Styling */
+body {
+    background-color: #1e1e2f; /* Dunkler Hintergrund für Kontrast */
+    color: #ffffff; /* Heller Text */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+/* Hauptcontainer */
+#main-menu {
+    padding: 20px;
+    border: 2px solid #2e2e4f;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #252540, #1a1a30); /* Subtiler Farbverlauf */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Überschriften */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #ffd700; /* Goldfarbener Titel */
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+h1:hover {
+    transform: scale(1.1);
+    color: #fff700; /* Aufleuchten beim Hover */
+}
+
+/* Modus-Auswahl Buttons */
+.mode-button {
+    background-color: #41416a;
+    color: #ffffff;
+    border: 1px solid #6464a5;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin: 10px 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.mode-button:hover {
+    background-color: #5b5baa;
+    transform: translateY(-2px);
+}
+
+.mode-button:active {
+    background-color: #2e2e4f;
+    transform: translateY(0);
+}
+
+/* Modus-Beschreibung */
+#mode-description {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #d1d1e0;
+    font-style: italic;
+}
+
+/* String-Auswahl Styling */
+#string-selection {
+    padding: 15px;
+    border: 2px solid #34345a;
+    border-radius: 8px;
+    background-color: #2e2e4f;
+    margin-top: 20px;
+}
+
+#string-selection div {
+    margin-bottom: 10px;
+}
+
+#string-selection label {
+    margin-left: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* Checkbox Styling */
+input[type='checkbox'] {
+    width: 18px;
+    height: 18px;
+    accent-color: #ffd700; /* Goldfarbener Akzent */
+    cursor: pointer;
+}
+
+/* Bestätigungsbutton */
+#confirm-button {
+    background-color: #3b3b5e;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 15px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#confirm-button:hover {
+    background-color: #5555aa;
+}
+
+#confirm-button:active {
+    background-color: #232344;
+}
+
+/* Spieloberfläche */
+#game-interface {
+    padding: 20px;
+    margin-top: 20px;
+    border: 2px solid #41416a;
+    border-radius: 8px;
+    background-color: #2c2c4c;
+}
+
+#game-interface p {
+    margin: 10px 0;
+    font-size: 1.2rem;
+    color: #ffffff;
+}
+
+/* Punktestand und Timer */
+#score-display, #timer {
+    font-size: 1.5rem;
+    color: #ffd700;
+}
+
+/* Hinweis für versteckte Elemente */
 .hidden {
-    visibility: hidden;
+    display: none;
+}
+
+#feedback-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 1000;
+    display: none;
+}
+
+#feedback-image {
+    width: 100px;
+    height: auto;
+    opacity: 0.8; /* Leichte Transparenz */
+    transition: opacity 0.3s ease;
+}
+
+/* Animation für das 'correct' Bild */
+@keyframes correctAnimation {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2); /* Skalierung des Bildes */
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Animation für das 'incorrect' Bild */
+@keyframes incorrectAnimation {
+    0% {
+        transform: rotate(-5deg);
+    }
+    25% {
+        transform: rotate(5deg);
+    }
+    50% {
+        transform: rotate(-5deg);
+    }
+    75% {
+        transform: rotate(5deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.correct-feedback {
+    animation: correctAnimation 0.5s ease;
+}
+
+.incorrect-feedback {
+    animation: incorrectAnimation 0.5s ease;
 }

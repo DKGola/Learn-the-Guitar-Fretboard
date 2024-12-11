@@ -13,126 +13,130 @@
             <button id="classic-mode-button" class="mode-button">Classic Mode</button>
             <button id="practice-mode-button" class="mode-button">Practice Mode</button>
             <p id="mode-description"></p>
-            <div id="string-selection" class="hidden">
-                <div>
-                    <input type="checkbox" id="E-string" name="E-string" checked/>
-                    <label for="E-string">E-String</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="A-string" name="A-string" checked/>
-                    <label for="A-string">A-String</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="D-string" name="D-string" checked/>
-                    <label for="D-string">D-String</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="G-string" name="G-string" checked/>
-                    <label for="G-string">G-String</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="B-string" name="B-string" checked/>
-                    <label for="B-string">B-String</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="e-string" name="e-string" checked/>
-                    <label for="e-string">e-String</label>
-                </div>
-                <button id="confirm-button">Confirm</button>
+        </div>
+        <div id="string-selection" class="hidden">
+            <div>
+                <input type="checkbox" id="E-string" name="E-string" value="6" checked/>
+                <label for="E-string">E-String</label>
             </div>
+            <div>
+                <input type="checkbox" id="A-string" name="A-string" value="5" checked/>
+                <label for="A-string">A-String</label>
+            </div>
+            <div>
+                <input type="checkbox" id="D-string" name="D-string" value="4" checked/>
+                <label for="D-string">D-String</label>
+            </div>
+            <div>
+                <input type="checkbox" id="G-string" name="G-string" value="3" checked/>
+                <label for="G-string">G-String</label>
+            </div>
+            <div>
+                <input type="checkbox" id="B-string" name="B-string" value="2" checked/>
+                <label for="B-string">B-String</label>
+            </div>
+            <div>
+                <input type="checkbox" id="e-string" name="e-string" value="1" checked/>
+                <label for="e-string">e-String</label>
+            </div>
+            <button id="confirm-button">Confirm</button>
         </div>
 
         <div id="game-interface" class="hidden">
-            <img src="guitarFretboard.png" usemap="#image-map">
+            <img src="guitarFretboard.png" usemap="#image-map" alt="guitar fretboard">
             <map name="image-map">
                 <!-- High e string (Saite 1) -->
-                <area coords="9,1,132,23" shape="rect" data-note="F" data-string="1" title="F (1st string)">
-                <area coords="143,0,258,24" shape="rect" data-note="F#" data-string="1" title="F# (1st string)">
-                <area coords="266,0,376,22" shape="rect" data-note="G" data-string="1" title="G (1st string)">
-                <area coords="388,0,488,22" shape="rect" data-note="G#" data-string="1" title="G# (1st string)">
-                <area coords="497,0,596,22" shape="rect" data-note="A" data-string="1" title="A (1st string)">
-                <area coords="604,0,694,22" shape="rect" data-note="A#" data-string="1" title="A# (1st string)">
-                <area coords="705,1,787,23" shape="rect" data-note="B" data-string="1" title="B (1st string)">
-                <area coords="798,0,879,23" shape="rect" data-note="C" data-string="1" title="C (1st string)">
-                <area coords="888,0,962,22" shape="rect" data-note="C#" data-string="1" title="C# (1st string)">
-                <area coords="970,0,1043,20" shape="rect" data-note="D" data-string="1" title="D (1st string)">
-                <area coords="1048,0,1116,19" shape="rect" data-note="D#" data-string="1" title="D# (1st string)">
-                <area coords="1125,0,1187,22" shape="rect" data-note="E" data-string="1" title="E (1st string)">
+                <area coords="9,1,132,23" shape="rect" data-note="F" data-string="1">
+                <area coords="143,0,258,24" shape="rect" data-note="F#" data-string="1">
+                <area coords="266,0,376,22" shape="rect" data-note="G" data-string="1">
+                <area coords="388,0,488,22" shape="rect" data-note="G#" data-string="1">
+                <area coords="497,0,596,22" shape="rect" data-note="A" data-string="1">
+                <area coords="604,0,694,22" shape="rect" data-note="A#" data-string="1">
+                <area coords="705,1,787,23" shape="rect" data-note="B" data-string="1">
+                <area coords="798,0,879,23" shape="rect" data-note="C" data-string="1">
+                <area coords="888,0,962,22" shape="rect" data-note="C#" data-string="1">
+                <area coords="970,0,1043,20" shape="rect" data-note="D" data-string="1">
+                <area coords="1048,0,1116,19" shape="rect" data-note="D#" data-string="1">
+                <area coords="1125,0,1187,22" shape="rect" data-note="E" data-string="1">
 
                 <!-- B string (Saite 2) -->
-                <area coords="8,24,132,54" shape="rect" data-note="C" data-string="2" title="C (2nd string)">
-                <area coords="143,26,257,54" shape="rect" data-note="C#" data-string="2" title="C# (2nd string)">
-                <area coords="268,24,377,53" shape="rect" data-note="D" data-string="2" title="D (2nd string)">
-                <area coords="388,24,488,51" shape="rect" data-note="D#" data-string="2" title="D# (2nd string)">
-                <area coords="497,24,597,50" shape="rect" data-note="E" data-string="2" title="E (2nd string)">
-                <area coords="602,24,695,51" shape="rect" data-note="F" data-string="2" title="F (2nd string)">
-                <area coords="703,24,790,51" shape="rect" data-note="F#" data-string="2" title="F# (2nd string)">
-                <area coords="798,27,879,51" shape="rect" data-note="G" data-string="2" title="G (2nd string)">
-                <area coords="888,27,963,51" shape="rect" data-note="G#" data-string="2" title="G# (2nd string)">
-                <area coords="973,27,1042,51" shape="rect" data-note="A" data-string="2" title="A (2nd string)">
-                <area coords="1051,27,1117,51" shape="rect" data-note="A#" data-string="2" title="A# (2nd string)">
-                <area coords="1125,27,1187,51" shape="rect" data-note="B" data-string="2" title="B (2nd string)">
+                <area coords="8,24,132,54" shape="rect" data-note="C" data-string="2">
+                <area coords="143,26,257,54" shape="rect" data-note="C#" data-string="2">
+                <area coords="268,24,377,53" shape="rect" data-note="D" data-string="2">
+                <area coords="388,24,488,51" shape="rect" data-note="D#" data-string="2">
+                <area coords="497,24,597,50" shape="rect" data-note="E" data-string="2">
+                <area coords="602,24,695,51" shape="rect" data-note="F" data-string="2">
+                <area coords="703,24,790,51" shape="rect" data-note="F#" data-string="2">
+                <area coords="798,27,879,51" shape="rect" data-note="G" data-string="2">
+                <area coords="888,27,963,51" shape="rect" data-note="G#" data-string="2">
+                <area coords="973,27,1042,51" shape="rect" data-note="A" data-string="2">
+                <area coords="1051,27,1117,51" shape="rect" data-note="A#" data-string="2">
+                <area coords="1125,27,1187,51" shape="rect" data-note="B" data-string="2">
 
                 <!-- G string (Saite 3) -->
-                <area coords="8,54,132,82" shape="rect" data-note="G#" data-string="3" title="G# (3rd string)">
-                <area coords="143,57,260,82" shape="rect" data-note="A" data-string="3" title="A (3rd string)">
-                <area coords="268,57,379,84" shape="rect" data-note="A#" data-string="3" title="A# (3rd string)">
-                <area coords="387,54,489,82" shape="rect" data-note="B" data-string="3" title="B (3rd string)">
-                <area coords="496,53,594,81" shape="rect" data-note="C" data-string="3" title="C (3rd string)">
-                <area coords="606,55,695,81" shape="rect" data-note="C#" data-string="3" title="C# (3rd string)">
-                <area coords="706,54,788,81" shape="rect" data-note="D" data-string="3" title="D (3rd string)">
-                <area coords="799,55,879,81" shape="rect" data-note="D#" data-string="3" title="D# (3rd string)">
-                <area coords="888,55,962,82" shape="rect" data-note="E" data-string="3" title="E (3rd string)">
-                <area coords="973,54,1043,81" shape="rect" data-note="F" data-string="3" title="F (3rd string)">
-                <area coords="1052,57,1117,82" shape="rect" data-note="F#" data-string="3" title="F# (3rd string)">
-                <area coords="1128,57,1187,82" shape="rect" data-note="G" data-string="3" title="G (3rd string)">
+                <area coords="8,54,132,82" shape="rect" data-note="G#" data-string="3">
+                <area coords="143,57,260,82" shape="rect" data-note="A" data-string="3">
+                <area coords="268,57,379,84" shape="rect" data-note="A#" data-string="3">
+                <area coords="387,54,489,82" shape="rect" data-note="B" data-string="3">
+                <area coords="496,53,594,81" shape="rect" data-note="C" data-string="3">
+                <area coords="606,55,695,81" shape="rect" data-note="C#" data-string="3">
+                <area coords="706,54,788,81" shape="rect" data-note="D" data-string="3">
+                <area coords="799,55,879,81" shape="rect" data-note="D#" data-string="3">
+                <area coords="888,55,962,82" shape="rect" data-note="E" data-string="3">
+                <area coords="973,54,1043,81" shape="rect" data-note="F" data-string="3">
+                <area coords="1052,57,1117,82" shape="rect" data-note="F#" data-string="3">
+                <area coords="1128,57,1187,82" shape="rect" data-note="G" data-string="3">
 
                 <!-- D string (Saite 4) -->
-                <area coords="8,84,132,109" shape="rect" data-note="D#" data-string="4" title="D# (4th string)">
-                <area coords="143,84,259,109" shape="rect" data-note="E" data-string="4" title="E (4th string)">
-                <area coords="270,86,377,109" shape="rect" data-note="F" data-string="4" title="F (4th string)">
-                <area coords="388,86,489,110" shape="rect" data-note="F#" data-string="4" title="F# (4th string)">
-                <area coords="499,84,594,109" shape="rect" data-note="G" data-string="4" title="G (4th string)">
-                <area coords="604,84,695,109" shape="rect" data-note="G#" data-string="4" title="G# (4th string)">
-                <area coords="705,85,790,109" shape="rect" data-note="A" data-string="4" title="A (4th string)">
-                <area coords="799,84,877,108" shape="rect" data-note="A#" data-string="4" title="A# (4th string)">
-                <area coords="888,84,962,108" shape="rect" data-note="B" data-string="4" title="B (4th string)">
-                <area coords="972,84,1043,108" shape="rect" data-note="C" data-string="4" title="C (4th string)">
-                <area coords="1051,84,1117,106" shape="rect" data-note="C#" data-string="4" title="C# (4th string)">
-                <area coords="1125,85,1187,108" shape="rect" data-note="D" data-string="4" title="D (4th string)">
+                <area coords="8,84,132,109" shape="rect" data-note="D#" data-string="4">
+                <area coords="143,84,259,109" shape="rect" data-note="E" data-string="4">
+                <area coords="270,86,377,109" shape="rect" data-note="F" data-string="4">
+                <area coords="388,86,489,110" shape="rect" data-note="F#" data-string="4">
+                <area coords="499,84,594,109" shape="rect" data-note="G" data-string="4">
+                <area coords="604,84,695,109" shape="rect" data-note="G#" data-string="4">
+                <area coords="705,85,790,109" shape="rect" data-note="A" data-string="4">
+                <area coords="799,84,877,108" shape="rect" data-note="A#" data-string="4">
+                <area coords="888,84,962,108" shape="rect" data-note="B" data-string="4">
+                <area coords="972,84,1043,108" shape="rect" data-note="C" data-string="4">
+                <area coords="1051,84,1117,106" shape="rect" data-note="C#" data-string="4">
+                <area coords="1125,85,1187,108" shape="rect" data-note="D" data-string="4">
 
                 <!-- A string (5. Saite) -->
-                <area coords="5,113,133,135" shape="rect" data-note="A#" data-string="5" title="A# (5th string)">
-                <area coords="144,112,259,136" shape="rect" data-note="B" data-string="5" title="B (5th string)">
-                <area coords="268,110,377,136" shape="rect" data-note="C" data-string="5" title="C (5th string)">
-                <area coords="387,112,489,136" shape="rect" data-note="C#" data-string="5" title="C# (5th string)">
-                <area coords="499,113,596,135" shape="rect" data-note="D" data-string="5" title="D (5th string)">
-                <area coords="604,112,695,135" shape="rect" data-note="D#" data-string="5" title="D# (5th string)">
-                <area coords="706,112,788,135" shape="rect" data-note="E" data-string="5" title="E (5th string)">
-                <area coords="799,110,879,136" shape="rect" data-note="F" data-string="5" title="F (5th string)">
-                <area coords="887,109,962,136" shape="rect" data-note="F#" data-string="5" title="F# (5th string)">
-                <area coords="972,110,1043,136" shape="rect" data-note="G" data-string="5" title="G (5th string)">
-                <area coords="1052,112,1117,135" shape="rect" data-note="G#" data-string="5" title="G# (5th string)">
-                <area coords="1127,112,1187,135" shape="rect" data-note="A" data-string="5" title="A (5th string)">
+                <area coords="5,113,133,135" shape="rect" data-note="A#" data-string="5">
+                <area coords="144,112,259,136" shape="rect" data-note="B" data-string="5">
+                <area coords="268,110,377,136" shape="rect" data-note="C" data-string="5">
+                <area coords="387,112,489,136" shape="rect" data-note="C#" data-string="5">
+                <area coords="499,113,596,135" shape="rect" data-note="D" data-string="5">
+                <area coords="604,112,695,135" shape="rect" data-note="D#" data-string="5">
+                <area coords="706,112,788,135" shape="rect" data-note="E" data-string="5">
+                <area coords="799,110,879,136" shape="rect" data-note="F" data-string="5">
+                <area coords="887,109,962,136" shape="rect" data-note="F#" data-string="5">
+                <area coords="972,110,1043,136" shape="rect" data-note="G" data-string="5">
+                <area coords="1052,112,1117,135" shape="rect" data-note="G#" data-string="5">
+                <area coords="1127,112,1187,135" shape="rect" data-note="A" data-string="5">
 
                 <!-- Low E string (6. Saite) -->
-                <area coords="7,137,132,162" shape="rect" data-note="F" data-string="6" title="F (6th string)">
-                <area coords="143,139,259,162" shape="rect" data-note="F#" data-string="6" title="F# (6th string)">
-                <area coords="271,137,379,162" shape="rect" data-note="G" data-string="6" title="G (6th string)">
-                <area coords="388,137,489,160" shape="rect" data-note="G#" data-string="6" title="G# (6th string)">
-                <area coords="499,137,596,162" shape="rect" data-note="A" data-string="6" title="A (6th string)">
-                <area coords="606,137,694,160" shape="rect" data-note="A#" data-string="6" title="A# (6th string)">
-                <area coords="705,136,788,160" shape="rect" data-note="B" data-string="6" title="B (6th string)">
-                <area coords="798,137,877,160" shape="rect" data-note="C" data-string="6" title="C (6th string)">
-                <area coords="888,137,962,160" shape="rect" data-note="C#" data-string="6" title="C# (6th string)">
-                <area coords="970,137,1042,162" shape="rect" data-note="D" data-string="6" title="D (6th string)">
-                <area coords="1052,137,1116,160" shape="rect" data-note="D#" data-string="6" title="D# (6th string)">
-                <area coords="1127,137,1187,160" shape="rect" data-note="E" data-string="6" title="E (6th string)">
+                <area coords="7,137,132,162" shape="rect" data-note="F" data-string="6">
+                <area coords="143,139,259,162" shape="rect" data-note="F#" data-string="6">
+                <area coords="271,137,379,162" shape="rect" data-note="G" data-string="6">
+                <area coords="388,137,489,160" shape="rect" data-note="G#" data-string="6">
+                <area coords="499,137,596,162" shape="rect" data-note="A" data-string="6">
+                <area coords="606,137,694,160" shape="rect" data-note="A#" data-string="6">
+                <area coords="705,136,788,160" shape="rect" data-note="B" data-string="6">
+                <area coords="798,137,877,160" shape="rect" data-note="C" data-string="6">
+                <area coords="888,137,962,160" shape="rect" data-note="C#" data-string="6">
+                <area coords="970,137,1042,162" shape="rect" data-note="D" data-string="6">
+                <area coords="1052,137,1116,160" shape="rect" data-note="D#" data-string="6">
+                <area coords="1127,137,1187,160" shape="rect" data-note="E" data-string="6">
             </map>
             <div id="note-display"></div>
             <div id="string-display"></div>
             <div id="score-display">Score: 0</div>
             <div id="timer">3:00</div>
+            <div id="feedback-container" class="hidden">
+                <img id="feedback-image" src="" alt="Feedback" />
+            </div>
+            
         </div>
         
 

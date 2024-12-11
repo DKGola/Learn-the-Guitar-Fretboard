@@ -28,8 +28,16 @@ document.addEventListener("DOMContentLoaded", () => {
         modeDescription.textContent = "Classic:\nA note is shown and you will have to select the correct spot on the fretboard.\nTry to do as many as possible within 3 minutes!";
     });
 
+    classicModeButton.addEventListener("mouseout", () => {
+        modeDescription.textContent = "";
+    });
+
     practiceModeButton.addEventListener("mouseover", () => {
         modeDescription.textContent = "Practice:\nNo time pressure or anything. You can even select specific notes you want to train.";
+    });
+
+    practiceModeButton.addEventListener("mouseout", () => {
+        modeDescription.textContent = "";
     });
 
     classicModeButton.addEventListener("click", () => {
@@ -71,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (mode === "practice") {
             timerDisplay.classList.add("hidden");
+            scoreDisplay.classList.add("hidden");
         } else {
             timerDisplay.classList.remove("hidden");
             startTimer();
@@ -78,6 +87,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const fretboardMap = document.querySelector("map[name='image-map']");
         fretboardMap.addEventListener("click", (e) => handleFretboardClick(e, selectedStrings));
+        // prevent blue selection when doubleclicking
+        fretboardMap.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+        });
+        fretboardMap.style.userSelect = 'none';
 
         generateNoteAndString(selectedStrings);
 
@@ -104,26 +118,49 @@ document.addEventListener("DOMContentLoaded", () => {
     
         if (e.target.tagName === "AREA") {
             e.preventDefault();
+    
             const selectedNote = e.target.dataset.note;
             const selectedString = e.target.dataset.string;
     
+            // Feedback-Bild Container
+            const feedbackContainer = document.getElementById("feedback-container");
+            const feedbackImage = document.getElementById("feedback-image");
+    
+            // Setze die richtige Animation und Bild basierend auf der Antwort
             if (isCorrect(shownNote, shownString, selectedNote, selectedString)) {
+                feedbackImage.src = "correct.png";
+                feedbackImage.classList.remove('incorrect-feedback');
+                feedbackImage.classList.add('correct-feedback');
+                feedbackContainer.style.display = "block"; // Bild anzeigen
                 score++;
                 scoreDisplay.textContent = `Punkte: ${score}`;
             } else {
+                feedbackImage.src = "incorrect.png";
+                feedbackImage.classList.remove('correct-feedback');
+                feedbackImage.classList.add('incorrect-feedback');
+                feedbackContainer.style.display = "block"; // Bild anzeigen
                 timer -= 5;
             }
     
-            generateNoteAndString(strings); // Lokale Variable verwenden
+            // Feedback-Bild nach kurzer Zeit wieder ausblenden
+            setTimeout(() => {
+                feedbackContainer.style.display = "none"; // Bild ausblenden
+            }, 1000); // 1 Sekunde lang anzeigen
+    
+            generateNoteAndString(strings); // Neue Note und Saite generieren
         }
-    }    
+    }
+    
+    
+    
 
     function generateNoteAndString(selectedStrings) {
         const note = generateRandomNote();
         const string = generateRandomString(selectedStrings);
 
         noteDisplay.textContent = `Note: ${note}`;
-        stringDisplay.textContent = `Saite: ${string}`;
+        const stringNames = ["e", "B", "G", "D", "A", "E"];
+        stringDisplay.textContent = `String: ${stringNames[string - 1]}`;
 
         shownNote = note;
         shownString = string;
@@ -142,19 +179,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function startTimer() {
-        timerDisplay.textContent = `Zeit: 3:00`;
+        timerDisplay.textContent = `Time: 3:00`;
     }
 
     function endGame() {
         gameRunning = false;
-        alert(`Spiel vorbei! Dein Score: ${score}`);
+        alert(`Your final score: ${score}`);
         resetGame();
     }
 
     function resetGame() {
         gameInterface.classList.add("hidden");
-        timerDisplay.textContent = "Zeit: 3:00";
-        scoreDisplay.textContent = "Punkte: 0";
+        timerDisplay.textContent = "Time: 3:00";
+        scoreDisplay.textContent = "Score: 0";
         noteDisplay.textContent = "";
         stringDisplay.textContent = "";
         timer = 180;
