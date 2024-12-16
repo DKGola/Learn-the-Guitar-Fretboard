@@ -11,6 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const timerDisplay = document.getElementById("timer");
     const noteDisplay = document.getElementById("note-display");
     const stringDisplay = document.getElementById("string-display");
+    const menuButton = document.getElementById("menu-button");
+    const replayButton = document.getElementById("replay-button");
+    const endScreen = document.getElementById("end-screen");
+    const mainMenuButton = document.getElementById("main-menu-button");
+    const feedbackContainer = document.getElementById("feedback-container");
+    const feedbackImage = document.getElementById("feedback-image");
 
     let score = 0;
     let timer = 180;
@@ -52,10 +58,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     confirmButton.addEventListener("click", () => {
         const selectedStrings = getSelectedStrings();
-        if (selectedStrings.length > 0) {
-            stringSelection.classList.add("hidden");
-            startGame("practice", selectedStrings);
+        if (selectedStrings.length === 0) {
+            alert("Please select at least one string.");
+            return;
         }
+        stringSelection.classList.add("hidden");
+        startGame("practice", selectedStrings);
+    });    
+
+    menuButton.addEventListener("click", () => {
+        const confirmBack = confirm("Do you really want to exit to the main menu?");
+        if (confirmBack) {
+            resetGame();
+            modeSelectionMenu.classList.remove("hidden");
+            gameInterface.classList.add("hidden");
+            menuButton.classList.add("hidden");
+        }
+    });
+
+    replayButton.addEventListener("click", () => {
+        endScreen.classList.add("hidden");
+        startGame("classic", allStrings);
     });
 
     function getSelectedStrings() {
@@ -69,14 +92,17 @@ document.addEventListener("DOMContentLoaded", () => {
         return selectedStrings;
     }
 
+    let timerInterval;
+
     function startGame(mode, selectedStrings) {
         score = 0;
-        timer = 180;
+        timer = 20;
         gameRunning = true;
-
+    
         gameInterface.classList.remove("hidden");
+        menuButton.classList.remove("hidden");
         scoreDisplay.textContent = `Punkte: ${score}`;
-
+    
         if (mode === "practice") {
             timerDisplay.classList.add("hidden");
             scoreDisplay.classList.add("hidden");
@@ -84,72 +110,75 @@ document.addEventListener("DOMContentLoaded", () => {
             timerDisplay.classList.remove("hidden");
             startTimer();
         }
-
+    
         const fretboardMap = document.querySelector("map[name='image-map']");
         fretboardMap.addEventListener("click", (e) => handleFretboardClick(e, selectedStrings));
-        // prevent blue selection when doubleclicking
         fretboardMap.addEventListener('dblclick', (e) => {
             e.preventDefault();
         });
         fretboardMap.style.userSelect = 'none';
-
+    
         generateNoteAndString(selectedStrings);
-
+    
         if (mode === "classic") {
-            const interval = setInterval(() => {
+            timerInterval = setInterval(() => {
                 if (!gameRunning) {
-                    clearInterval(interval);
+                    clearInterval(timerInterval);
                     return;
                 }
-
+    
                 timer--;
-                timerDisplay.textContent = `Zeit: ${Math.floor(timer / 60)}:${("0" + (timer % 60)).slice(-2)}`;
-
+                const minutes = Math.floor(timer / 60);
+                const seconds = ("0" + (timer % 60)).slice(-2);
+                timerDisplay.textContent = `Time: ${minutes}:${seconds}`;
+    
                 if (timer <= 0) {
-                    clearInterval(interval);
+                    clearInterval(timerInterval);
                     endGame();
                 }
             }, 1000);
         }
-    }
+    }    
+
+    let feedbackActive = false;
 
     function handleFretboardClick(e, strings) {
-        if (!gameRunning) return;
-    
+        if (!gameRunning || feedbackActive) return;
+
+        if (!feedbackContainer || !feedbackImage) {
+            console.error("Feedback container or image not found in DOM.");
+            return;
+        }
+
         if (e.target.tagName === "AREA") {
             e.preventDefault();
-    
+
             const selectedNote = e.target.dataset.note;
             const selectedString = e.target.dataset.string;
-    
-            // Feedback-Bild Container
-            const feedbackContainer = document.getElementById("feedback-container");
-            const feedbackImage = document.getElementById("feedback-image");
-    
-            // Setze die richtige Animation und Bild basierend auf der Antwort
+
+            feedbackActive = true; // Prevent overlapping feedback
             if (isCorrect(shownNote, shownString, selectedNote, selectedString)) {
                 feedbackImage.src = "correct.png";
-                feedbackImage.classList.remove('incorrect-feedback');
-                feedbackImage.classList.add('correct-feedback');
-                feedbackContainer.style.display = "block"; // Bild anzeigen
+                feedbackImage.className = 'correct-feedback'; // Simpler way to reset classes
+                feedbackContainer.style.display = "block";
                 score++;
-                scoreDisplay.textContent = `Punkte: ${score}`;
+                scoreDisplay.textContent = `Score: ${score}`;
             } else {
                 feedbackImage.src = "incorrect.png";
-                feedbackImage.classList.remove('correct-feedback');
-                feedbackImage.classList.add('incorrect-feedback');
-                feedbackContainer.style.display = "block"; // Bild anzeigen
-                timer -= 5;
+                feedbackImage.className = 'incorrect-feedback';
+                feedbackContainer.style.display = "block";
+                timer -= 5; // Penalize user
             }
-    
-            // Feedback-Bild nach kurzer Zeit wieder ausblenden
+
             setTimeout(() => {
-                feedbackContainer.style.display = "none"; // Bild ausblenden
-            }, 1000); // 1 Sekunde lang anzeigen
-    
-            generateNoteAndString(strings); // Neue Note und Saite generieren
+                feedbackContainer.style.display = "none";
+                feedbackActive = false;
+            }, 1000);
+
+            generateNoteAndString(strings);
         }
     }
+
     
     
     
@@ -184,10 +213,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function endGame() {
         gameRunning = false;
-        alert(`Your final score: ${score}`);
-        resetGame();
+        clearInterval(timerInterval);
+        gameInterface.classList.add("hidden");
+        menuButton.classList.add("hidden");
+        endScreen.classList.remove("hidden");
+    
+        const resultsDiv = document.getElementById("results");
+        resultsDiv.textContent = `Dein End-Score: ${score}`;
+    
+        const highscoreDiv = document.getElementById("highscore");
+        const savedHighscore = localStorage.getItem("highscore") || 0;
+        if (isNaN(savedHighscore) || score > savedHighscore) {
+            localStorage.setItem("highscore", score);
+            highscoreDiv.textContent = `Neuer Highscore: ${score}`;
+        } else {
+            highscoreDiv.textContent = `Dein Highscore: ${savedHighscore}`;
+        }
+    
+        
+        replayButton.textContent = "Nochmal spielen";
+        replayButton.onclick = () => {
+            endScreen.classList.add("hidden");
+            startGame("classic", allStrings);
+        };
+    
+        mainMenuButton.textContent = "Zurück zum Hauptmenü";
+        mainMenuButton.onclick = () => {
+            endScreen.classList.add("hidden");
+            modeSelectionMenu.classList.remove("hidden");
+            resetGame();
+        };
     }
-
+    
     function resetGame() {
         gameInterface.classList.add("hidden");
         timerDisplay.textContent = "Time: 3:00";
