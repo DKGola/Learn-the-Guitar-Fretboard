@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <!-- Menübutton, immer sichtbar -->
-    <button id="menu-button" class="corner-button hidden">Menü</button>
+    <button id="menu-button" class="corner-button hidden">Menu</button>
     <div id="main-menu">
         <h1 id="start-button">Start</h1>
         <div id="mode-selection-menu" class="hidden">
@@ -45,9 +44,9 @@
         </div>
 
         <div id="game-interface" class="hidden">
-            <img src="guitarFretboard.png" usemap="#image-map" alt="guitar fretboard">
+            <img id = "fretboard-image" src="guitarFretboard.png" usemap="#image-map" alt="guitar fretboard">
             <map name="image-map">
-                <!-- High e string (Saite 1) -->
+                <!-- high e string (1st string) -->
                 <area coords="9,1,132,23" shape="rect" data-note="F" data-string="1">
                 <area coords="143,0,258,24" shape="rect" data-note="F#" data-string="1">
                 <area coords="266,0,376,22" shape="rect" data-note="G" data-string="1">
@@ -61,7 +60,7 @@
                 <area coords="1048,0,1116,19" shape="rect" data-note="D#" data-string="1">
                 <area coords="1125,0,1187,22" shape="rect" data-note="E" data-string="1">
 
-                <!-- B string (Saite 2) -->
+                <!-- B string (2nd string) -->
                 <area coords="8,24,132,54" shape="rect" data-note="C" data-string="2">
                 <area coords="143,26,257,54" shape="rect" data-note="C#" data-string="2">
                 <area coords="268,24,377,53" shape="rect" data-note="D" data-string="2">
@@ -75,7 +74,7 @@
                 <area coords="1051,27,1117,51" shape="rect" data-note="A#" data-string="2">
                 <area coords="1125,27,1187,51" shape="rect" data-note="B" data-string="2">
 
-                <!-- G string (Saite 3) -->
+                <!-- G string (3rd string) -->
                 <area coords="8,54,132,82" shape="rect" data-note="G#" data-string="3">
                 <area coords="143,57,260,82" shape="rect" data-note="A" data-string="3">
                 <area coords="268,57,379,84" shape="rect" data-note="A#" data-string="3">
@@ -89,7 +88,7 @@
                 <area coords="1052,57,1117,82" shape="rect" data-note="F#" data-string="3">
                 <area coords="1128,57,1187,82" shape="rect" data-note="G" data-string="3">
 
-                <!-- D string (Saite 4) -->
+                <!-- D string (4th string) -->
                 <area coords="8,84,132,109" shape="rect" data-note="D#" data-string="4">
                 <area coords="143,84,259,109" shape="rect" data-note="E" data-string="4">
                 <area coords="270,86,377,109" shape="rect" data-note="F" data-string="4">
@@ -103,7 +102,7 @@
                 <area coords="1051,84,1117,106" shape="rect" data-note="C#" data-string="4">
                 <area coords="1125,85,1187,108" shape="rect" data-note="D" data-string="4">
 
-                <!-- A string (5. Saite) -->
+                <!-- A string (5th string) -->
                 <area coords="5,113,133,135" shape="rect" data-note="A#" data-string="5">
                 <area coords="144,112,259,136" shape="rect" data-note="B" data-string="5">
                 <area coords="268,110,377,136" shape="rect" data-note="C" data-string="5">
@@ -117,7 +116,7 @@
                 <area coords="1052,112,1117,135" shape="rect" data-note="G#" data-string="5">
                 <area coords="1127,112,1187,135" shape="rect" data-note="A" data-string="5">
 
-                <!-- Low E string (6. Saite) -->
+                <!-- Low E string (6th string) -->
                 <area coords="7,137,132,162" shape="rect" data-note="F" data-string="6">
                 <area coords="143,139,259,162" shape="rect" data-note="F#" data-string="6">
                 <area coords="271,137,379,162" shape="rect" data-note="G" data-string="6">
@@ -134,7 +133,10 @@
             <div id="note-display"></div>
             <div id="string-display"></div>
             <div id="score-display">Score: 0</div>
-            <div id="timer">3:00</div>
+            <div id="timer-container">
+                <span id="timer">Time: 3:00</span>
+                <span id="penalty" class="invisible">-5</span>
+            </div>         
             <div id="feedback-container" class="hidden">
                 <img id="feedback-image" src="" alt="Feedback"/>
             </div>

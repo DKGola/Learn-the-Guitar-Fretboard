@@ -17,10 +17,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const mainMenuButton = document.getElementById("main-menu-button");
     const feedbackContainer = document.getElementById("feedback-container");
     const feedbackImage = document.getElementById("feedback-image");
+    const penaltyElement = document.getElementById("penalty");
+    const fretboardMap = document.querySelector("map[name='image-map']");
 
     let score = 0;
     let timer = 180;
     let gameRunning = false;
+    let feedbackActive = false;
+    let mode = "classic";
 
     const allStrings = ["6", "5", "4", "3", "2", "1"];
     const allNotes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
@@ -46,16 +50,20 @@ document.addEventListener("DOMContentLoaded", () => {
         modeDescription.textContent = "";
     });
 
+    // classic mode: starts game with all strings
     classicModeButton.addEventListener("click", () => {
         modeSelectionMenu.classList.add("hidden");
-        startGame("classic", allStrings);
+        mode = "classic";
+        startGame(allStrings);
     });
 
+    // practice mode: select strings to practices
     practiceModeButton.addEventListener("click", () => {
         modeSelectionMenu.classList.add("hidden");
         stringSelection.classList.remove("hidden");
     });
 
+    // select 1 or more strings to practice
     confirmButton.addEventListener("click", () => {
         const selectedStrings = getSelectedStrings();
         if (selectedStrings.length === 0) {
@@ -63,9 +71,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
         stringSelection.classList.add("hidden");
-        startGame("practice", selectedStrings);
+        mode = "practice";
+        startGame(selectedStrings);
     });    
 
+    // menu button in the corner to return to the main menu
     menuButton.addEventListener("click", () => {
         const confirmBack = confirm("Do you really want to exit to the main menu?");
         if (confirmBack) {
@@ -76,11 +86,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // replay button on the end screen to start a new game
     replayButton.addEventListener("click", () => {
         endScreen.classList.add("hidden");
-        startGame("classic", allStrings);
+        startGame(allStrings);
     });
 
+    // return the selected strings as an array (practice mode only)
     function getSelectedStrings() {
         const checkboxes = stringSelection.querySelectorAll("input[type='checkbox']");
         const selectedStrings = [];
@@ -92,34 +104,37 @@ document.addEventListener("DOMContentLoaded", () => {
         return selectedStrings;
     }
 
-    let timerInterval;
+    let timerInterval;  // used by startGame() and endGame()
 
-    function startGame(mode, selectedStrings) {
+    // initialize game and start timer
+    function startGame(selectedStrings) {
         score = 0;
-        timer = 20;
+        timer = 180;
         gameRunning = true;
     
         gameInterface.classList.remove("hidden");
         menuButton.classList.remove("hidden");
         scoreDisplay.textContent = `Punkte: ${score}`;
     
-        if (mode === "practice") {
+        if (mode === "practice") {  // no timer or score in practice mode
             timerDisplay.classList.add("hidden");
             scoreDisplay.classList.add("hidden");
+            
+            penaltyElement.classList.add("invisible");
         } else {
+            timerDisplay.textContent = `Time: 3:00`;
             timerDisplay.classList.remove("hidden");
-            startTimer();
         }
     
-        const fretboardMap = document.querySelector("map[name='image-map']");
         fretboardMap.addEventListener("click", (e) => handleFretboardClick(e, selectedStrings));
         fretboardMap.addEventListener('dblclick', (e) => {
             e.preventDefault();
         });
         fretboardMap.style.userSelect = 'none';
     
-        generateNoteAndString(selectedStrings);
+        generateNoteAndString(selectedStrings);     // update note and string variables
     
+        // timer
         if (mode === "classic") {
             timerInterval = setInterval(() => {
                 if (!gameRunning) {
@@ -133,15 +148,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 timerDisplay.textContent = `Time: ${minutes}:${seconds}`;
     
                 if (timer <= 0) {
-                    clearInterval(timerInterval);
                     endGame();
                 }
             }, 1000);
         }
     }    
 
-    let feedbackActive = false;
-
+    // handles a click on the fretboard and checks if the clicked note is correct
     function handleFretboardClick(e, strings) {
         if (!gameRunning || feedbackActive) return;
 
@@ -156,10 +169,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const selectedNote = e.target.dataset.note;
             const selectedString = e.target.dataset.string;
 
-            feedbackActive = true; // Prevent overlapping feedback
-            if (isCorrect(shownNote, shownString, selectedNote, selectedString)) {
+            feedbackActive = true; // prevent overlapping feedback
+            // visualize if click was right or wrong
+            if (isCorrect(shownNote, shownString, selectedNote, selectedString)) {  
                 feedbackImage.src = "correct.png";
-                feedbackImage.className = 'correct-feedback'; // Simpler way to reset classes
+                feedbackImage.className = 'correct-feedback';
                 feedbackContainer.style.display = "block";
                 score++;
                 scoreDisplay.textContent = `Score: ${score}`;
@@ -167,7 +181,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 feedbackImage.src = "incorrect.png";
                 feedbackImage.className = 'incorrect-feedback';
                 feedbackContainer.style.display = "block";
-                timer -= 5; // Penalize user
+                if (mode === "classic") {
+                    timer -= 5; // Subtract 5 seconds from timer if wrong
+                    showPenalty("-5");
+                }
             }
 
             setTimeout(() => {
@@ -179,10 +196,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    
-    
-    
+    // show red "-5" for 1 second when player clicks wrong note
+    function showPenalty(text) {
+        penaltyElement.textContent = text;
+        penaltyElement.classList.remove("invisible");
 
+        setTimeout(() => {
+            penaltyElement.classList.add("invisible");
+        }, 1000);
+    }
+
+    // generate and display a random note and string the user has to find
     function generateNoteAndString(selectedStrings) {
         const note = generateRandomNote();
         const string = generateRandomString(selectedStrings);
@@ -195,22 +219,22 @@ document.addEventListener("DOMContentLoaded", () => {
         shownString = string;
     }
 
+    // generate a random note
     function generateRandomNote() {
         return allNotes[Math.floor(Math.random() * allNotes.length)];
     }
 
+    // generate a random string (practice mode: selected strings only)
     function generateRandomString(strings) {
         return strings[Math.floor(Math.random() * strings.length)];
     }
 
+    // returns true if the shown and selected string and note match
     function isCorrect(shownNote, shownString, selectedNote, selectedString) {
         return shownNote === selectedNote && shownString === selectedString;
     }
 
-    function startTimer() {
-        timerDisplay.textContent = `Time: 3:00`;
-    }
-
+    // end game and show results with option to replay or quit
     function endGame() {
         gameRunning = false;
         clearInterval(timerInterval);
@@ -219,25 +243,26 @@ document.addEventListener("DOMContentLoaded", () => {
         endScreen.classList.remove("hidden");
     
         const resultsDiv = document.getElementById("results");
-        resultsDiv.textContent = `Dein End-Score: ${score}`;
+        resultsDiv.textContent = `Final Score: ${score}`;
     
         const highscoreDiv = document.getElementById("highscore");
         const savedHighscore = localStorage.getItem("highscore") || 0;
         if (isNaN(savedHighscore) || score > savedHighscore) {
             localStorage.setItem("highscore", score);
-            highscoreDiv.textContent = `Neuer Highscore: ${score}`;
+            highscoreDiv.textContent = `New Highscore!`;
         } else {
-            highscoreDiv.textContent = `Dein Highscore: ${savedHighscore}`;
+            highscoreDiv.textContent = `Your Highscore: ${savedHighscore}`;
         }
     
         
-        replayButton.textContent = "Nochmal spielen";
+        replayButton.textContent = "Try again";
         replayButton.onclick = () => {
             endScreen.classList.add("hidden");
-            startGame("classic", allStrings);
+            resetGame();
+            startGame(allStrings);
         };
     
-        mainMenuButton.textContent = "Zurück zum Hauptmenü";
+        mainMenuButton.textContent = "Main Menu";
         mainMenuButton.onclick = () => {
             endScreen.classList.add("hidden");
             modeSelectionMenu.classList.remove("hidden");
@@ -245,12 +270,16 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
     
+    // reset game state when replaying or returning to main menu
     function resetGame() {
+        gameRunning = false;
+        feedbackActive = false;
         gameInterface.classList.add("hidden");
         timerDisplay.textContent = "Time: 3:00";
         scoreDisplay.textContent = "Score: 0";
         noteDisplay.textContent = "";
         stringDisplay.textContent = "";
+        clearInterval(timerInterval);
         timer = 180;
         score = 0;
     }
