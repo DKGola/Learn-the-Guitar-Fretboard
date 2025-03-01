@@ -32,4 +32,13 @@ Additionaly, you can select a single string or a small set of strings to practic
 ## Authors
 
 * Damian Gola
-* Maik Schindler
+
+## Images
+
+<img width="1728" alt="Screenshot 2025-03-01 at 13 33 53" src="https://github.com/user-attachments/assets/b0a2a138-f0be-456f-88cc-1acac850a62f" />
+<img width="1728" alt="Screenshot 2025-03-01 at 13 35 33" src="https://github.com/user-attachments/assets/7971a629-471c-4a41-b13f-8e8eac151ee8" />
+<img width="1728" alt="Screenshot 2025-03-01 at 13 35 40" src="https://github.com/user-attachments/assets/7b860874-20d1-4462-9582-ce6bd701f6fe" />
+<img width="1728" alt="Screenshot 2025-03-01 at 13 35 47" src="https://github.com/user-attachments/assets/004d53d1-fbfc-4b61-85dd-dac6c5eb932c" />
+<img width="1728" alt="Screenshot 2025-03-01 at 13 34 05" src="https://github.com/user-attachments/assets/d751a33c-f267-470f-b793-a539addd548f" />
+<img width="1728" alt="Screenshot 2025-03-01 at 13 36 12" src="https://github.com/user-attachments/assets/220ea82f-f3a4-44a7-8051-f97999aaa937" />
+<img width="1728" alt="Screenshot 2025-03-01 at 13 36 23" src="https://github.com/user-attachments/assets/89e49cce-ed3b-4ba2-bea9-8e2f71823aba" />
